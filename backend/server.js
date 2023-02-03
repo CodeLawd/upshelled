@@ -4,7 +4,6 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import { seedData } from "./seeder.js";
 import jwt from "jsonwebtoken";
-import { SECRET_KEY } from "./constant/secret.js";
 import { isLoggedIn } from "./auth.js";
 
 const app = express();
@@ -46,7 +45,7 @@ app.post("/login", async (req, res) => {
       message: `Password is incorrect`,
     });
 
-  const token = jwt.sign({ username: user.seller_id }, SECRET_KEY);
+  const token = jwt.sign({ username: user.seller_id }, process.env.SECRET_KEY);
 
   return res.status(200).json({
     success: true,

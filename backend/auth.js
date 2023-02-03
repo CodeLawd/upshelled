@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { SECRET_KEY } from "./constant/secret.js";
 
 export const isLoggedIn = async (req, res, next) => {
   try {
@@ -8,7 +7,7 @@ export const isLoggedIn = async (req, res, next) => {
       // parse token from header
       const token = req.headers.authorization.split(" ")[1];
       if (token) {
-        const payload = await jwt.verify(token, SECRET_KEY);
+        const payload = await jwt.verify(token, process.env.SECRET_KEY);
         if (payload) {
           // store user data in request object
           req.user = payload;
