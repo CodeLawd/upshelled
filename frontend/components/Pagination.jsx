@@ -2,21 +2,24 @@ import Link from "next/link";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 
-const Items = ({ currentItems }) => {
+const Orders = ({ currentOrders }) => {
   return (
     <tbody>
-      {currentItems &&
-        currentItems.map((order, id) => (
-          <tr className="cursor-pointer">
-            <Link key={id} href={`/orders/${order?.order_id}`}>
-              <td>{id + 1}</td>
-              <td>{order?.order_id}</td>
-              <td>{order?.order_item_id}</td>
-              <td>{order?.product_id}</td>
-              <td>{order?.shipping_limit_date}</td>
-              <td>{order?.price}</td>
-              <td>{order?.freight_value}</td>
-            </Link>
+      {currentOrders &&
+        currentOrders.map((order, id) => (
+          <tr className="" key={id}>
+            <td>{id + 1}</td>
+            <td>
+              <Link href={`/orders/${order?.order_id}`} className="hover:text-blue-700">
+                {" "}
+                {order?.order_id}{" "}
+              </Link>
+            </td>
+            <td>{order?.order_item_id}</td>
+            <td>{order?.product_id}</td>
+            <td>{order?.shipping_limit_date}</td>
+            <td>{order?.price}</td>
+            <td>{order?.freight_value}</td>
           </tr>
         ))}
     </tbody>
@@ -27,7 +30,7 @@ const PaginatedItems = ({ itemsPerPage, items }) => {
   const [itemOffset, setItemOffset] = useState(0);
 
   const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items?.slice(itemOffset, endOffset);
+  const currentOrders = items?.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(items?.length / itemsPerPage);
 
   // Invoke when user click to request another page.
@@ -45,7 +48,7 @@ const PaginatedItems = ({ itemsPerPage, items }) => {
             <tr>
               <th>S/N</th>
               <th>Order ID</th>
-              <th>Order Item ID</th>
+              <th>Item ID</th>
               <th>Product ID</th>
               <th>Shipping Date</th>
               <th>Price</th>
@@ -53,7 +56,7 @@ const PaginatedItems = ({ itemsPerPage, items }) => {
             </tr>
           </thead>
 
-          <Items currentItems={currentItems} />
+          <Orders currentOrders={currentOrders} />
         </table>
       </div>
       <ReactPaginate
@@ -65,7 +68,8 @@ const PaginatedItems = ({ itemsPerPage, items }) => {
         previousLabel="Prev"
         renderOnZeroPageCount={null}
         containerClassName="flex gap-8 items-center justify-end mt-5"
-        activeClassName="bg-black py-2 px-4 text-white font-bold"
+        activeClassName="bg-black py-2 px-4 text-white font-bold cursor-pointer"
+        disabledClassName="btn-disabled btn-outline"
       />
     </>
   );

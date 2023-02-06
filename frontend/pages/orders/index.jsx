@@ -1,20 +1,14 @@
 import { API } from "@/helpers/axios";
 import { isAuthticated } from "@/helpers/isAuthenticated";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import ReactPaginate from "react-paginate";
 import PaginatedItems from "@/components/Pagination";
 
 const Dashboard = ({ itemsPerPage }) => {
-  const [user, setUser] = useState(null);
   const [orders, setOrders] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
 
   const router = useRouter();
 
@@ -60,7 +54,7 @@ const Dashboard = ({ itemsPerPage }) => {
           <div className="md:max-w-[90%] mx-auto">
             <div className="flex justify-between mb-4">
               <h1 className="font-bold text-2xl mb-4">
-                All your orders{" "}
+                All your orders
                 <span className="text-sm font-light ml-3 italic"> {orders?.length} orders in total </span>
               </h1>
               <button className="btn rounded-none" onClick={logout}>
@@ -68,8 +62,9 @@ const Dashboard = ({ itemsPerPage }) => {
               </button>
             </div>
 
+            <p className="mb-5 italic font-light">NB: Click on the order id to see full order details </p>
+
             <PaginatedItems itemsPerPage={5} items={orders} />
-            
           </div>
         ) : (
           <p>Loading...</p>
