@@ -27,7 +27,7 @@ const database = async () => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const PORT = 8080;
+const PORT = 8080 || process.env.PORT;
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -96,6 +96,7 @@ app.get("/order_items/:orderId", isLoggedIn, async (req, res) => {
   });
 });
 
+// Update Order with Order ID
 app.patch("/order_items/:orderId", isLoggedIn, async (req, res) => {
   console.log(req.params);
   const user = await db
