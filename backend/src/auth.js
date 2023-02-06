@@ -19,7 +19,7 @@ export const isLoggedIn = async (req, res, next) => {
         res.status(400).json({ error: "malformed auth header" });
       }
     } else {
-      res.status(400).json({ error: "No authorization header" });
+      res.status(400).json({ error: "You must be logged in to access this route" });
     }
   } catch (error) {
     res.status(400).json({ error });

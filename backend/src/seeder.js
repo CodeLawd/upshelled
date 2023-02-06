@@ -1,5 +1,5 @@
 import csvtojson from "csvtojson";
-import { db } from "./server.js";
+import { db } from "../server.js";
 
 export const seedData = () => {
   // Seed sellers data
