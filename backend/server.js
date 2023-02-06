@@ -79,7 +79,7 @@ app.get("/order_items", isLoggedIn, async (req, res) => {
   });
 });
 
-// Delete Order with Order ID
+// Get Order with Order ID
 app.get("/order_items/:orderId", isLoggedIn, async (req, res) => {
   const { orderId } = req.params;
   const order = await db.collection("orders").findOne({ order_id: orderId });

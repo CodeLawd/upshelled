@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ArrowLeftIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { DeleteModal, EditModal } from "@/components";
 
 const Order = () => {
   const [order, setOrder] = useState();
@@ -139,8 +140,11 @@ const Order = () => {
               </div>
               <div className="h-[0.3px] my-3 bg-black w-full" />
               <div className="card-actions flex">
-                <label htmlFor="my-modal" className="btn rounded-none bg-green-700 border-none flex-1">
-                  <PencilSquareIcon className="h-5 w-5 cursor-pointer mr-3" /> Edit Order
+                <label
+                  htmlFor="my-modal"
+                  className={`${loading && "loading"} btn rounded-none bg-green-700 border-none flex-1`}
+                >
+                  <PencilSquareIcon className="h-5 w-5 cursor-pointer mr-3" /> {loading ? "" : "Edit Order"}
                 </label>
                 <label htmlFor="my-modal-1" className="btn rounded-none bg-red-600 border-none flex-1">
                   <TrashIcon className="h-5 w-5 cursor-pointer  mr-3" /> Delete Order
@@ -154,63 +158,16 @@ const Order = () => {
       </div>
 
       {/* MODAL */}
-
-      <input type="checkbox" id="my-modal" className="modal-toggle" />
-      <label htmlFor="my-modal" className="modal cursor-pointer">
-        <label className="modal-box relative" htmlFor="">
-          <h3 className="font-bold text-lg">Edit Order</h3>
-          <div>
-            <div className="flex flex-col mt-6 space-y-2">
-              <label htmlFor="Price"> Price </label>
-              <input
-                type="text"
-                name="price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                className="text-black input rounded-none input-bordered focus:outline-offset-0 focus:outline-1 disabled:bg-[#ececec] disabled:text-black"
-              />
-            </div>
-
-            <div className="flex flex-col mt-6 space-y-2">
-              <label htmlFor="Freight Value"> Freight Value: </label>
-              <input
-                type="text"
-                name="freight_value"
-                value={freightValue}
-                onChange={(e) => setFreightValue(e.target.value)}
-                className="text-black input rounded-none input-bordered focus:outline-offset-0 focus:outline-1 disabled:bg-[#ececec] disabled:text-black"
-              />
-            </div>
-          </div>
-          <div className="modal-action">
-            <label
-              htmlFor="my-modal"
-              className={`${loading && "loading"} btn rounded-none bg-green-700 border-none flex-1`}
-              onClick={editOrder}
-            >
-              <PencilSquareIcon className="h-5 w-5 cursor-pointer mr-3" /> {loading ? "" : "Update Order"}
-            </label>
-          </div>
-        </label>
-      </label>
+      <EditModal
+        price={price}
+        editOrder={editOrder}
+        setPrice={setPrice}
+        freightValue={freightValue}
+        setFreightValue={setFreightValue}
+      />
 
       {/* DELETE MODAL */}
-
-      <input type="checkbox" id="my-modal-1" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Are you sure you want to delete this order?</h3>
-
-          <div className="modal-action flex items-center">
-            <button className="btn rounded-none bg-green-700 border-none flex-1" onClick={deleteOrder}>
-              Yes
-            </button>
-            <label htmlFor="my-modal-1" className="btn rounded-none bg-black border-none flex-1">
-              No
-            </label>
-          </div>
-        </div>
-      </div>
+      <DeleteModal deleteOrder={deleteOrder} />
     </>
   );
 };

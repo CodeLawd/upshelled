@@ -5,12 +5,16 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import ReactPaginate from "react-paginate";
+import PaginatedItems from "@/components/Pagination";
 
-const Dashboard = () => {
+const Dashboard = ({ itemsPerPage }) => {
   const [user, setUser] = useState(null);
   const [orders, setOrders] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(5);
+  const [disabled, setDisabled] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
 
   const router = useRouter();
 
@@ -63,43 +67,9 @@ const Dashboard = () => {
                 Logout
               </button>
             </div>
-            <div className="overflow-x-auto">
-              <table className="table w-full border rounded-none">
-                <thead>
-                  <tr>
-                    <th>S/N</th>
-                    <th>Order ID</th>
-                    <th>Order Item ID</th>
-                    <th>Product ID</th>
-                    <th>Shipping Date</th>
-                    <th>Price</th>
-                    <th>Frieght Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders?.slice(0, count).map((order, id) => (
-                    // <Link key={id} href={`/orders/${order?.order_id}`}>
-                    <tr key={id} className="hover:bg-black cursor-pointer">
-                      <td>{id + 1}</td>
-                      <td>{order?.order_id}</td>
-                      <td>{order?.order_item_id}</td>
-                      <td>{order?.product_id}</td>
-                      <td>{order?.shipping_limit_date}</td>
-                      <td>{order?.price}</td>
-                      <td>{order?.freight_value}</td>
-                    </tr>
-                    // </Link>
-                  ))}
-                </tbody>
-              </table>
-            </div>
 
-            <div className="btn-group flex justify-end mt-5 gap-3">
-              <button className="btn btn-outline">Previous page</button>
-              <button className="btn btn-outline" onClick={() => setCount(count + 5)}>
-                Next
-              </button>
-            </div>
+            <PaginatedItems itemsPerPage={5} items={orders} />
+            
           </div>
         ) : (
           <p>Loading...</p>
