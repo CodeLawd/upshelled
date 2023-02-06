@@ -1,20 +1,21 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 
 const Orders = ({ currentOrders }) => {
+  const router = useRouter();
   return (
     <tbody>
       {currentOrders &&
         currentOrders.map((order, id) => (
-          <tr className="" key={id}>
+          <tr
+            className="cursor-pointer hover:text-blue-500"
+            key={id}
+            onClick={() => router.push(`/orders/${order?.order_id}`)}
+          >
             <td>{id + 1}</td>
-            <td>
-              <Link href={`/orders/${order?.order_id}`} className="hover:text-blue-700">
-                {" "}
-                {order?.order_id}{" "}
-              </Link>
-            </td>
+            <td> {order?.order_id} </td>
             <td>{order?.order_item_id}</td>
             <td>{order?.product_id}</td>
             <td>{order?.shipping_limit_date}</td>
